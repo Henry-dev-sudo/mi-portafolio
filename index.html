@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
   <header class="nav">
@@ -64,13 +65,13 @@
       <h2>Tecnologías</h2>
       <p class="note">Mi nivel actual en cada tecnología. Sigo avanzando.</p>
       <ul class="skills">
-        <li class="skill"><div class="skill-head"><span>TypeScript</span><span>65%</span></div><div class="bar" role="progressbar" aria-label="TypeScript" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65"><span style="width:65%"></span></div></li>
-        <li class="skill"><div class="skill-head"><span>Python</span><span>70%</span></div><div class="bar" role="progressbar" aria-label="Python" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70"><span style="width:70%"></span></div></li>
+        <li class="skill"><div class="skill-head"><span>TypeScript</span><span>55%</span></div><div class="bar" role="progressbar" aria-label="TypeScript" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65"><span style="width:65%"></span></div></li>
+        <li class="skill"><div class="skill-head"><span>Python</span><span>50%</span></div><div class="bar" role="progressbar" aria-label="Python" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70"><span style="width:70%"></span></div></li>
         <li class="skill"><div class="skill-head"><span>JavaScript</span><span>65%</span></div><div class="bar" role="progressbar" aria-label="JavaScript" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65"><span style="width:65%"></span></div></li>
         <li class="skill"><div class="skill-head"><span>HTML</span><span>85%</span></div><div class="bar" role="progressbar" aria-label="HTML" aria-valuemin="0" aria-valuemax="100" aria-valuenow="85"><span style="width:85%"></span></div></li>
         <li class="skill"><div class="skill-head"><span>CSS</span><span>80%</span></div><div class="bar" role="progressbar" aria-label="CSS" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"><span style="width:80%"></span></div></li>
         <li class="skill"><div class="skill-head"><span>Node.js</span><span>50%</span></div><div class="bar" role="progressbar" aria-label="Node.js" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span style="width:50%"></span></div></li>
-        <li class="skill"><div class="skill-head"><span>MySQL</span><span>55%</span></div><div class="bar" role="progressbar" aria-label="MySQL" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55"><span style="width:55%"></span></div></li>
+        <li class="skill"><div class="skill-head"><span>MySQL</span><span>45%</span></div><div class="bar" role="progressbar" aria-label="MySQL" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55"><span style="width:55%"></span></div></li>
         <li class="skill"><div class="skill-head"><span>Docker</span><span>40%</span></div><div class="bar" role="progressbar" aria-label="Docker" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40"><span style="width:40%"></span></div></li>
         <li class="skill"><div class="skill-head"><span>Git y GitHub</span><span>70%</span></div><div class="bar" role="progressbar" aria-label="Git y GitHub" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70"><span style="width:70%"></span></div></li>
         <li class="skill"><div class="skill-head"><span>React / Next.js</span><span>55%</span></div><div class="bar" role="progressbar" aria-label="React / Next.js" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55"><span style="width:55%"></span></div></li>
@@ -120,5 +121,20 @@
   </main>
 
   <footer class="footer">© 2026 Henry Zelaya. Hecho con HTML y CSS.</footer>
+  <script>
+    // Aparición suave de los elementos al hacer scroll
+    const io = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".section > h2, .section > p, .section > .actions, .about-grid > *, .card, .skill, .contact-list li")
+      .forEach((el, i) => {
+        el.classList.add("reveal");
+        el.style.setProperty("--d", (i % 4) * 90 + "ms");
+        el.addEventListener("transitionend", () => el.style.setProperty("--d", "0ms"), { once: true });
+        io.observe(el);
+      });
+  </script>
 </body>
 </html>

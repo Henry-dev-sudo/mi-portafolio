@@ -5,7 +5,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{background:var(--negro);color:var(--texto);font:400 1.05rem/1.7 'Inter',system-ui,sans-serif}
+body{background-color:var(--negro);background-image:linear-gradient(135deg,rgba(123,18,48,.2) 25%,transparent 25%,transparent 50%,rgba(123,18,48,.2) 50%,rgba(123,18,48,.2) 75%,transparent 75%,transparent);background-size:64px 64px;animation:rayas 6s linear infinite;color:var(--texto);font:400 1.05rem/1.7 'Inter',system-ui,sans-serif}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--vino-claro);outline-offset:3px}
 
@@ -16,7 +16,7 @@ a{color:inherit;text-decoration:none}
 .nav nav a{color:var(--suave);font-size:.95rem;font-weight:500}
 .nav nav a:hover{color:var(--texto)}
 
-.hero{display:grid;grid-template-columns:1.4fr 1fr;gap:3rem;align-items:center;
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center;
   padding:6rem 5vw;min-height:88vh;max-width:1200px;margin:auto}
 .kicker{color:var(--vino-claro);font-weight:600;margin-bottom:1rem}
 h1{font:800 clamp(2.2rem,5vw,3.8rem)/1.1 'Fraunces',serif;margin-bottom:1.2rem}
@@ -27,15 +27,13 @@ h1{font:800 clamp(2.2rem,5vw,3.8rem)/1.1 'Fraunces',serif;margin-bottom:1.2rem}
 .btn.primary:hover{background:var(--vino-claro);border-color:var(--vino-claro)}
 .btn.ghost:hover{background:var(--vino-oscuro)}
 
-.hero-photo{justify-self:center;width:min(100%,340px);aspect-ratio:1;border-radius:50%;
-  background:linear-gradient(145deg,var(--vino),var(--negro));padding:6px;
-  box-shadow:0 0 0 1px var(--vino-oscuro),0 30px 60px rgba(123,18,48,.3)}
+.hero-photo{position:relative;justify-self:center;width:min(100%,460px);aspect-ratio:1;border-radius:50%;background:var(--negro);padding:7px}
 .hero-photo img,.photo-fallback{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:center 18%;background:var(--carbon)}
 .photo-fallback{display:none;place-items:center;font:800 7rem 'Fraunces',serif;color:var(--vino-claro)}
 
 .section{padding:5rem 5vw}
 .section>*{max-width:1100px;margin-left:auto;margin-right:auto}
-.section.alt{background:var(--carbon);border-block:1px solid var(--linea)}
+.section.alt{background:rgba(21,18,19,.84);border-block:1px solid var(--linea)}
 h2{font:800 2.2rem 'Fraunces',serif;margin-bottom:1.5rem;padding-bottom:.6rem;border-bottom:3px solid var(--vino);width:fit-content}
 .section p{color:var(--suave);max-width:65ch}
 
@@ -85,7 +83,85 @@ h2{font:800 2.2rem 'Fraunces',serif;margin-bottom:1.5rem;padding-bottom:.6rem;bo
   .about-grid{grid-template-columns:1fr}
   .nav nav{gap:.9rem}.nav nav a{font-size:.85rem}
   .hero{grid-template-columns:1fr;padding:3rem 6vw;min-height:auto}
-  .hero-photo{order:-1;width:200px}
+  .hero-photo{order:-1;width:min(78vw,320px)}
   .photo-fallback{font-size:4.5rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+
+/* ===== Animaciones y efectos ===== */
+@keyframes rayas{to{background-position:64px 0}}
+@keyframes subir{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes entrar{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+@keyframes flotar{50%{transform:translateY(-14px)}}
+@keyframes giro{to{transform:rotate(360deg)}}
+@keyframes brillo{to{background-position:200% 0}}
+@keyframes progreso{to{transform:scaleX(1)}}
+
+/* viñeta para que las rayas se vean más en los bordes y no distraigan al centro */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 35%,rgba(10,10,10,.82) 0,rgba(10,10,10,.35) 70%,rgba(10,10,10,.1) 100%)}
+
+/* logo con brillo animado */
+.logo{background:linear-gradient(90deg,var(--vino-claro),#e0526f,var(--vino-claro));background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:brillo 4s linear infinite}
+
+/* subrayado animado del menú */
+.nav nav a{position:relative}
+.nav nav a::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:100%;background:var(--vino-claro);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.nav nav a:hover::after{transform:scaleX(1)}
+
+/* barra de progreso de scroll (navegadores que la soportan) */
+@supports (animation-timeline:scroll()){
+  .nav::after{content:"";position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:var(--vino-claro);
+    transform:scaleX(0);transform-origin:left;animation:progreso linear both;animation-timeline:scroll()}
+}
+
+/* entrada de la portada */
+.hero-text>*{animation:subir .8s ease both}
+.hero-text>:nth-child(2){animation-delay:.12s}
+.hero-text>:nth-child(3){animation-delay:.24s}
+.hero-text>:nth-child(4){animation-delay:.36s}
+.hero-photo{animation:entrar 1s ease .2s both,flotar 6s ease-in-out 1.2s infinite}
+
+/* anillo giratorio y brillo alrededor de la foto */
+.hero-photo::before{content:"";position:absolute;inset:-9px;border-radius:50%;z-index:0;
+  background:conic-gradient(from 0deg,var(--vino-claro),transparent 35%,var(--vino),transparent 70%,var(--vino-claro));
+  animation:giro 5s linear infinite}
+.hero-photo::after{content:"";position:absolute;inset:-30px;border-radius:50%;z-index:-1;
+  background:radial-gradient(circle,rgba(163,32,63,.35),transparent 70%)}
+.hero-photo img,.photo-fallback{position:relative;z-index:1}
+
+/* botones con brillo */
+.btn{position:relative;overflow:hidden;transition:background .2s,border-color .2s,transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(123,18,48,.45)}
+.btn.primary::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);
+  transform:translateX(-100%);transition:transform .6s}
+.btn.primary:hover::after{transform:translateX(100%)}
+
+/* aparición al hacer scroll (solo si hay JavaScript) */
+.js .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease var(--d,0ms),transform .7s ease var(--d,0ms)}
+.js .reveal.visible{opacity:1;transform:none}
+
+/* barras de tecnologías que se llenan */
+.js .bar span{transform:scaleX(0);transform-origin:left;transition:transform 1.3s cubic-bezier(.2,.8,.2,1) .25s}
+.js .skill.visible .bar span{transform:scaleX(1)}
+
+/* tarjetas de proyecto */
+.card{position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:linear-gradient(90deg,var(--vino),var(--vino-claro));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.js .card.reveal.visible{transition:transform .3s,box-shadow .3s,border-color .3s,opacity .7s}
+.js .card.reveal.visible:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(123,18,48,.4)}
+.card:hover::before{transform:scaleX(1)}
+.info-card{transition:transform .3s,box-shadow .3s}
+.info-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(123,18,48,.3)}
+.contact-list li{transition:transform .25s,border-color .25s}
+.contact-list li:hover{transform:translateY(-4px);border-color:var(--vino-claro)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+  .js .bar span{transform:none}
+}
